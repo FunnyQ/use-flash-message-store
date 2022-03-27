@@ -1,0 +1,31 @@
+{
+  "name": "use-flash-message-store",
+  "version": "1.0.0",
+  "description": "Flash message management with Pinia. Composable for vue composition API",
+  "main": "dist/use-flash-message-store.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/funnyq/use-flash-message-store.git"
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts"
+  ],
+  "typings": "dist/use-flash-message-store.d.ts",
+  "private": true,
+  "author": "FunnyQ <funnyq@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/types": "^7.17.0",
+    "prettier": "^2.6.1",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "pinia": "^2.0.11",
+    "vue": "^3.2.31"
+  }
+}
