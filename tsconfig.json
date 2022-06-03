@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "esnext",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "noUnusedLocals": true,
+    "paths": {
+    },
+    "types": [
+      "pinia",
+      "./types/flash-message"
+    ]
+  },
+  "include": [
+  ],
+  "exclude": [
+    "node_modules",
+    "**/**/*.md",
+    "**/dist"
+  ]
+}
