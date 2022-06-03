@@ -19,7 +19,7 @@ flashMessageStore.init((flashMessage: FlashMessage) => {
 })
 
 // add single message
-flashMessageStore.add({message: 'test'})
+flashMessageStore.add({ message: 'test' })
 
 // set multiple messages
 flashMessageStore.set([

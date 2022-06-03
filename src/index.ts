@@ -1,18 +1,24 @@
 import { defineStore } from 'pinia'
-import { FlashMessage, FlashMessageArgument, IFlashMessageStore, RootState } from '../types'
 
-const DEFAULT_MESSAGE_FORMAT: FlashMessage = {
+const DEFAULT_MESSAGE: FlashMessage = {
   type: 'success',
   message: '',
   position: 'top'
 }
 
-// helpers
+const mergeWithDefaultMessage = (
+  flashMessage: FlashMessageArgument
+): FlashMessage => {
+  return { ...DEFAULT_MESSAGE, ...flashMessage }
+}
 
 /**
  * set callback function
  */
-const showFlashMessageWith = (callback: (flashMessage: FlashMessage) => any, patcher: Function): void => {
+const showFlashMessageWith = (
+  callback: (flashMessage: FlashMessage) => any,
+  patcher: Function
+): void => {
   patcher((state: RootState) => {
     state.showFlashMessageFunction = callback
   })
@@ -30,7 +36,6 @@ const showAllMessages = (store: IFlashMessageStore) => {
 }
 
 // store definition
-
 export const useFlashMessageStore = defineStore('[odd] flash-message-store', {
   state: (): RootState => {
     return {
@@ -42,7 +47,6 @@ export const useFlashMessageStore = defineStore('[odd] flash-message-store', {
   getters: {
     /**
      * list all flash messages in an array
-     * @returns {FlashMessage[]}
      */
     all(state): FlashMessage[] {
       return state.queue
@@ -51,14 +55,11 @@ export const useFlashMessageStore = defineStore('[odd] flash-message-store', {
 
   actions: {
     /**
-     * initializing flash message store. if any change happen to `queue` and include new messages, `__showAllMessages`
+     * initializing flash message store. if any change happen to `queue` and include new messages, `showAllMessages`
      * will been called for display messages in View.
-     * @param {(flashMessage: FlashMessage) => any} callback provide a callback function to show flashMessages in View.
      */
     init(callback: (flashMessage: FlashMessage) => any) {
       showFlashMessageWith(callback, this.$patch)
-
-      if (!this.showFlashMessageFunction) throw new Error('Should dispatch `init` action first.')
 
       this.$subscribe(() => {
         if (this.queue.length <= 0) return
@@ -71,19 +72,17 @@ export const useFlashMessageStore = defineStore('[odd] flash-message-store', {
 
     /**
      * add a message into flash message queue
-     * @param {FlashMessage} flashMessage an flashMessage object
      */
     add(flashMessage: FlashMessageArgument) {
-      this.queue.push({ ...DEFAULT_MESSAGE_FORMAT, ...flashMessage })
+      this.queue.push(mergeWithDefaultMessage(flashMessage))
     },
 
     /**
-     * reset queue as flash message array
-     * @param {FlashMessage[]} flashMessages
+     * assign flash message array into queue directly.
      */
     set(flashMessages: FlashMessageArgument[]) {
       this.queue = flashMessages.map((flashMessage) => {
-        return { ...DEFAULT_MESSAGE_FORMAT, ...flashMessage }
+        return mergeWithDefaultMessage(flashMessage)
       })
     },
 
