@@ -38,7 +38,6 @@ const $149c1bd638913645$export$90826238043733b = (0, $hgUW1$defineStore)("[odd] 
     getters: {
         /**
      * list all flash messages in an array
-     * @returns {FlashMessage[]}
      */ all (state) {
             return state.queue;
         }
