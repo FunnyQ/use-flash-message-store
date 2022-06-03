@@ -49,7 +49,6 @@ const $882b6d93070905b3$export$90826238043733b = (0, $8zHUo$pinia.defineStore)("
     getters: {
         /**
      * list all flash messages in an array
-     * @returns {FlashMessage[]}
      */ all (state) {
             return state.queue;
         }
