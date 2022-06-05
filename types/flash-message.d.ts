@@ -25,6 +25,7 @@ type FlashMessageArgument = {
 type RootState = {
   queue: FlashMessage[]
   showFlashMessageFunction?: Function
+  uiFramework: string
 }
 
 interface IFlashMessageStore extends RootState {
@@ -32,7 +33,10 @@ interface IFlashMessageStore extends RootState {
   all: FlashMessage[]
 
   // actions
-  init(callback: (flashMessage: FlashMessage) => any): void
+  init(
+    uiFrameworkName: 'buefy' | 'primevue' | undefined,
+    callback: (flashMessage: FlashMessage) => any
+  ): void
 
   add(flashMessage: FlashMessageArgument): void
 

@@ -8,7 +8,7 @@ import { FlashMessage } from 'use-flash-message-store/types'
 const flashMessageStore = useFlashMessageStore()
 // use init action, provide a callback function for display messages
 // the only argument of callback function is FlashMessage object.
-flashMessageStore.init((flashMessage: FlashMessage) => {
+flashMessageStore.init('buefy', (flashMessage: FlashMessage) => {
   Toast.open({
     duration: 5000,
     type: `is-${flashMessage.type}`,

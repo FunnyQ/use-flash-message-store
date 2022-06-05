@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { primevueAdapter } from './primevue_adapter'
 
 const DEFAULT_MESSAGE: FlashMessage = {
   type: 'success',
@@ -24,15 +25,36 @@ const showFlashMessageWith = (
   })
 }
 
+const convertFlashMessageArguments = (
+  store: IFlashMessageStore,
+  flashMessage: FlashMessage
+) => {
+  switch (store.uiFramework) {
+    case 'buefy':
+      return flashMessage
+    case 'primevue':
+      return primevueAdapter(flashMessage)
+    default:
+      return flashMessage
+  }
+}
+
 /**
  * display messages in View, with function that provided from vue component.
  */
 const showAllMessages = (store: IFlashMessageStore) => {
   store.all.forEach((flashMessage: FlashMessage) => {
-    // @ts-ignore
-    store.showFlashMessageFunction(flashMessage)
+    if (!!store.showFlashMessageFunction) {
+      store.showFlashMessageFunction(
+        convertFlashMessageArguments(store, flashMessage)
+      )
+      store.clear()
+    } else {
+      console.error(
+        '[FlashMessageStore] please define `showFlashMessageFunction` use `init` action first.'
+      )
+    }
   })
-  store.clear()
 }
 
 // store definition
@@ -40,7 +62,8 @@ export const useFlashMessageStore = defineStore('[odd] flash-message-store', {
   state: (): RootState => {
     return {
       queue: [],
-      showFlashMessageFunction: undefined
+      showFlashMessageFunction: undefined,
+      uiFramework: 'buefy'
     }
   },
 
@@ -58,7 +81,12 @@ export const useFlashMessageStore = defineStore('[odd] flash-message-store', {
      * initializing flash message store. if any change happen to `queue` and include new messages, `showAllMessages`
      * will been called for display messages in View.
      */
-    init(callback: (flashMessage: FlashMessage) => any) {
+    init(
+      uiFrameworkName: 'buefy' | 'primevue' | undefined,
+      callback: (flashMessage: FlashMessage) => any
+    ) {
+      uiFrameworkName &&
+        this.$patch((state) => (state.uiFramework = uiFrameworkName))
       showFlashMessageWith(callback, this.$patch)
 
       this.$subscribe(() => {
