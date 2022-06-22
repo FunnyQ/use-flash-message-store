@@ -1,3 +1,4 @@
+export const DEFAULT_MESSAGE: FlashMessage;
 export const useFlashMessageStore: import("pinia").StoreDefinition<"[odd] flash-message-store", RootState, {
     /**
      * list all flash messages in an array

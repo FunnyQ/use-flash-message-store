@@ -19,8 +19,6 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "noUnusedLocals": true,
-    "paths": {
-    },
     "types": [
       "pinia",
       "./types/flash-message"

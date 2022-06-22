@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { primevueAdapter } from './primevue_adapter'
 
-const DEFAULT_MESSAGE: FlashMessage = {
+export const DEFAULT_MESSAGE: FlashMessage = {
   type: 'success',
   message: '',
   position: 'top'
@@ -35,6 +35,9 @@ const convertFlashMessageArguments = (
     case 'primevue':
       return primevueAdapter(flashMessage)
     default:
+      console.info(
+        `[odd][useFlashMessage] There is no adapter for UI Framework '${store.uiFramework}'. We'll use original argument format,`
+      )
       return flashMessage
   }
 }

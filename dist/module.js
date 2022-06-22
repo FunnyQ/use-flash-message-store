@@ -1,31 +1,36 @@
 import {defineStore as $hgUW1$defineStore} from "pinia";
 
 
-const $88cdab1f4656fa48$var$MessageTypeMap = {
+const $88cdab1f4656fa48$var$convertRequiredKeys = [
+    "type",
+    "message",
+    "position"
+];
+const $88cdab1f4656fa48$var$messageTypeMap = {
     warning: "warn",
     danger: "error"
 };
-const $88cdab1f4656fa48$var$PositionMap = {
+const $88cdab1f4656fa48$var$positionMap = {
     top: "top-center",
-    bottom: "center"
+    bottom: "bottom-center"
 };
 const $88cdab1f4656fa48$var$convertSeverity = (messageType)=>{
-    // @ts-ignore will return original value if type not in the map.
-    return $88cdab1f4656fa48$var$MessageTypeMap[messageType] || messageType;
+    return $88cdab1f4656fa48$var$messageTypeMap[messageType] || messageType;
 };
 const $88cdab1f4656fa48$var$convertGroup = (position)=>{
-    // @ts-ignore will return original value if type not in the map.
-    return $88cdab1f4656fa48$var$PositionMap[position] || position;
+    return $88cdab1f4656fa48$var$positionMap[position] || position;
 };
-const $88cdab1f4656fa48$export$7dab0b7d393bdd66 = (args)=>{
+const $88cdab1f4656fa48$export$7dab0b7d393bdd66 = (originalArguments)=>{
+    let args = {
+        ...originalArguments
+    };
     const converted = {
         severity: $88cdab1f4656fa48$var$convertSeverity(args.type),
         detail: args.message,
         group: $88cdab1f4656fa48$var$convertGroup(args.position)
     };
-    delete args.position;
-    delete args.type;
-    delete args.message;
+    // remove converted keys
+    Object.keys(args).filter((key)=>!$88cdab1f4656fa48$var$convertRequiredKeys.includes(key)).forEach((key)=>delete args[key]);
     return {
         ...converted,
         ...args
@@ -33,14 +38,14 @@ const $88cdab1f4656fa48$export$7dab0b7d393bdd66 = (args)=>{
 };
 
 
-const $149c1bd638913645$var$DEFAULT_MESSAGE = {
+const $149c1bd638913645$export$78e8c44f99db902d = {
     type: "success",
     message: "",
     position: "top"
 };
 const $149c1bd638913645$var$mergeWithDefaultMessage = (flashMessage)=>{
     return {
-        ...$149c1bd638913645$var$DEFAULT_MESSAGE,
+        ...$149c1bd638913645$export$78e8c44f99db902d,
         ...flashMessage
     };
 };
@@ -58,6 +63,7 @@ const $149c1bd638913645$var$convertFlashMessageArguments = (store, flashMessage)
         case "primevue":
             return (0, $88cdab1f4656fa48$export$7dab0b7d393bdd66)(flashMessage);
         default:
+            console.info(`[odd][useFlashMessage] There is no adapter for UI Framework '${store.uiFramework}'. We'll use original argument format,`);
             return flashMessage;
     }
 };
@@ -121,5 +127,5 @@ const $149c1bd638913645$export$90826238043733b = (0, $hgUW1$defineStore)("[odd] 
 var $149c1bd638913645$export$2e2bcd8739ae039 = $149c1bd638913645$export$90826238043733b;
 
 
-export {$149c1bd638913645$export$90826238043733b as useFlashMessageStore, $149c1bd638913645$export$2e2bcd8739ae039 as default};
+export {$149c1bd638913645$export$78e8c44f99db902d as DEFAULT_MESSAGE, $149c1bd638913645$export$90826238043733b as useFlashMessageStore, $149c1bd638913645$export$2e2bcd8739ae039 as default};
 //# sourceMappingURL=module.js.map
