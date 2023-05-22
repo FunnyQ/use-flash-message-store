@@ -128,4 +128,4 @@ var $149c1bd638913645$export$2e2bcd8739ae039 = $149c1bd638913645$export$90826238
 
 
 export {$149c1bd638913645$export$78e8c44f99db902d as DEFAULT_MESSAGE, $149c1bd638913645$export$90826238043733b as useFlashMessageStore, $149c1bd638913645$export$2e2bcd8739ae039 as default};
-//# sourceMappingURL=module.js.map
+//# sourceMappingURL=module.mjs.map
